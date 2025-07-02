@@ -1,0 +1,1 @@
+pipeline { agent any ... DockerHub and Maven stages ... }
