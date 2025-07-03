@@ -1,1 +1,26 @@
-pipeline { agent any ... DockerHub and Maven stages ... }
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') {
+      steps { git 'https://github.com/deorepooja/FinanceMe-Capstone' }
+    }
+    stage('Build') {
+      steps { sh 'mvn clean package' }
+    }
+    stage('Test') {
+      steps { sh 'mvn test' }
+    }
+    stage('Docker Build & Push') {
+      steps {
+        sh 'docker build -t deorepooja/insureme .'
+        withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+          sh 'echo $PASS | docker login -u $USER --password-stdin'
+          sh 'docker push deorepooja/insureme'
+        }
+      }
+    }
+    stage('Deploy to K8s') {
+      steps { sh 'kubectl apply -f kubernetes/deployment.yaml' }
+    }
+  }
+}
