@@ -1,1 +1,65 @@
-{ "dashboard": { "title": "FinanceMe Metrics" } }
+{
+  "dashboard": {
+    "id": null,
+    "title": "FinanceMe - Spring Boot Metrics",
+    "timezone": "browser",
+    "panels": [
+      {
+        "type": "graph",
+        "title": "HTTP Requests Rate",
+        "targets": [
+          {
+            "expr": "rate(http_server_requests_seconds_count[1m])",
+            "legendFormat": "{{method}} {{uri}}",
+            "interval": ""
+          }
+        ],
+        "datasource": "Prometheus",
+        "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
+      },
+      {
+        "type": "graph",
+        "title": "JVM Memory Usage",
+        "targets": [
+          {
+            "expr": "jvm_memory_used_bytes{area=\"heap\"}",
+            "legendFormat": "Heap: {{id}}",
+            "interval": ""
+          },
+          {
+            "expr": "jvm_memory_used_bytes{area=\"nonheap\"}",
+            "legendFormat": "Non-Heap: {{id}}",
+            "interval": ""
+          }
+        ],
+        "datasource": "Prometheus",
+        "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
+      },
+      {
+        "type": "stat",
+        "title": "Active Threads",
+        "targets": [
+          {
+            "expr": "jvm_threads_live_threads",
+            "legendFormat": "",
+            "interval": ""
+          }
+        ],
+        "datasource": "Prometheus",
+        "gridPos": { "x": 0, "y": 8, "w": 6, "h": 4 }
+      },
+      {
+        "type": "stat",
+        "title": "Garbage Collection Time",
+        "targets": [
+          {
+            "expr": "rate(jvm_gc_pause_seconds_sum[5m])",
+            "legendFormat": "GC Pause (s)",
+            "interval": ""
+          }
+        ],
+        "datasource": "Prometheus",
+        "gridPos": { "x": 6, "y": 8, "w": 6, "h": 4 }
+      }
+    ],
+    "schemaVersion":
