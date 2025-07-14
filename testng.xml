@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="FinanceMe Suite" verbose="1">
+    <listeners>
+        <listener class-name="org.testng.reporters.EmailableReporter" />
+        <listener class-name="org.testng.reporters.XMLReporter" />
+    </listeners>
+
+    <test name="AccountService Test">
+        <classes>
+            <class name="com.finance.service.AccountServiceTest"/>
+        </classes>
+    </test>
+</suite>
